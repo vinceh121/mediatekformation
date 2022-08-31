@@ -1,4 +1,36 @@
 {% extends "basefront.html.twig" %}
 {% block body %}
-    page des formations
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-left align-top" scope="col">
+                    titre
+                </th>
+                <th class="text-center align-top" scope="col">
+                 </th>
+                <th class="text-center align-top" scope="col">
+                    &nbsp;
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for formation in formations %}
+                <tr>
+                    <td>
+                        <h5 class="text-info">
+                            {{ formation.title }}
+                        </h5>
+                    </td>
+                    <td class="text-center">
+                        {{ formation.publishedatstring }}
+                    </td>
+                    <td class="text-center">
+                        {% if formation.miniature %}
+                            <img src="{{ formation.miniature }}">
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
