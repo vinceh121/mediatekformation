@@ -4,10 +4,17 @@
         <thead>
             <tr>
                 <th class="text-left align-top" scope="col">
-                    titre
+                    formation
+                </th>
+                <th class="text-left align-top" scope="col">
+                    playlist
+                </th>
+                <th class="text-left align-top" scope="col">
+                    catégories
                 </th>
                 <th class="text-center align-top" scope="col">
-                 </th>
+                    date                    
+                </th>
                 <th class="text-center align-top" scope="col">
                     &nbsp;
                 </th>
@@ -21,6 +28,14 @@
                             {{ formation.title }}
                         </h5>
                     </td>
+                    <td class="text-left">
+                        {{ formation.playlist.name }}
+                    </td>                    
+                    <td class="text-left">
+                        {% for categorie in formation.categories %}
+                            {{ categorie.name }}<br />
+                        {% endfor %}
+                    </td>                    
                     <td class="text-center">
                         {{ formation.publishedatstring }}
                     </td>
