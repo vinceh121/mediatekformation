@@ -80,4 +80,16 @@ class FormationsController extends AbstractController {
         ]);
     }  
     
+    /**
+     * @Route("/formations/formation/{id}", name="formations.showone")
+     * @param type $id
+     * @return Response
+     */
+    public function showOne($id): Response{
+        $formation = $this->formationRepository->find($id);
+        return $this->render("pages/formation.html.twig", [
+            'formation' => $formation
+        ]);        
+    }   
+    
 }
