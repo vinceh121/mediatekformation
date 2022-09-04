@@ -14,6 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Formation
 {
     /**
+     * Début de chemin vers les images
+     */
+    private const cheminImage = "https://i.ytimg.com/vi/";
+    
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -34,11 +39,6 @@ class Formation
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $miniature;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -110,14 +110,12 @@ class Formation
 
     public function getMiniature(): ?string
     {
-        return $this->miniature;
+        return self::cheminImage.$this->videoId."/default.jpg";
     }
 
-    public function setMiniature(?string $miniature): self
+    public function getPicture(): ?string
     {
-        $this->miniature = $miniature;
-
-        return $this;
+        return self::cheminImage.$this->videoId."/hqdefault.jpg";
     }
 
     public function getVideoId(): ?string

@@ -91,4 +91,17 @@ class FormationRepository extends ServiceEntityRepository
         }       
     }    
     
+    /**
+     * Retourne les n formations les plus récentes
+     * @param type $nb
+     * @return Formation[]
+     */
+    public function findAllLasted($nb) : array {
+        return $this->createQueryBuilder('f')
+           ->orderBy('f.publishedAt', 'DESC')
+           ->setMaxResults($nb)     
+           ->getQuery()
+           ->getResult();
+    }    
+    
 }
