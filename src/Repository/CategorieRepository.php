@@ -38,29 +38,21 @@ class CategorieRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    /**
+     * Retourne la liste des catégories des formations d'une playlist
+     * @param type $idPlaylist
+     * @return array
+     */
+    public function findAllForOnePlaylist($idPlaylist): array{
+        return $this->createQueryBuilder('c')
+                ->join('c.formations', 'f')
+                ->join('f.playlist', 'p')
+                ->where('p.id=:id')
+                ->setParameter('id', $idPlaylist)
+                ->orderBy('c.name', 'ASC')   
+                ->getQuery()
+                ->getResult();        
+    }    
 
-//    /**
-//     * @return Categorie[] Returns an array of Categorie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Categorie
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -30,7 +30,7 @@ class Playlist
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="playlists")
+     * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="playlist")
      */
     private $formations;
 

@@ -98,10 +98,25 @@ class FormationRepository extends ServiceEntityRepository
      */
     public function findAllLasted($nb) : array {
         return $this->createQueryBuilder('f')
-           ->orderBy('f.publishedAt', 'DESC')
-           ->setMaxResults($nb)     
-           ->getQuery()
-           ->getResult();
+                ->orderBy('f.publishedAt', 'DESC')
+                ->setMaxResults($nb)     
+                ->getQuery()
+                ->getResult();
     }    
+    
+    /**
+     * Retourne la liste des formations d'une playlist
+     * @param type $idPlaylist
+     * @return array
+     */
+    public function findAllForOnePlaylist($idPlaylist): array{
+        return $this->createQueryBuilder('f')
+                ->join('f.playlist', 'p')
+                ->where('p.id=:id')
+                ->setParameter('id', $idPlaylist)
+                ->orderBy('f.publishedAt', 'ASC')   
+                ->getQuery()
+                ->getResult();        
+    }
     
 }
