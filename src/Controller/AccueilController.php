@@ -37,4 +37,11 @@ class AccueilController extends AbstractController{
         ]); 
     }
     
+    /**
+     * @Route("/cgu", name="cgu")
+     * @return Response
+     */
+    public function cgu(): Response{
+        return $this->render("pages/cgu.html.twig"); 
+    }
 }
