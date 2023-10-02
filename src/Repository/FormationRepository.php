@@ -73,6 +73,7 @@ class FormationRepository extends ServiceEntityRepository
         if($valeur==""){
             return $this->findAll();
         }
+
         if($table==""){
             return $this->createQueryBuilder('f')
                     ->where('f.'.$champ.' LIKE :valeur')

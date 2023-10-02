@@ -14,15 +14,13 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Categorie[]    findAll()
  * @method Categorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategorieRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class CategorieRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Categorie::class);
     }
 
-    public function add(Categorie $entity, bool $flush = false): void
-    {
+    public function add(Categorie $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -30,8 +28,7 @@ class CategorieRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Categorie $entity, bool $flush = false): void
-    {
+    public function remove(Categorie $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -44,15 +41,14 @@ class CategorieRepository extends ServiceEntityRepository
      * @param int $idPlaylist
      * @return Categorie[]
      */
-    public function findAllForOnePlaylist($idPlaylist): array
-    {
+    public function findAllForOnePlaylist($idPlaylist): array {
         return $this->createQueryBuilder('c')
-            ->join('c.formations', 'f')
-            ->join('f.playlist', 'p')
-            ->where('p.id=:id')
-            ->setParameter('id', $idPlaylist)
-            ->orderBy('c.name', 'ASC')
-            ->getQuery()
-            ->getResult();
+                        ->join('c.formations', 'f')
+                        ->join('f.playlist', 'p')
+                        ->where('p.id=:id')
+                        ->setParameter('id', $idPlaylist)
+                        ->orderBy('c.name', 'ASC')
+                        ->getQuery()
+                        ->getResult();
     }
 }
