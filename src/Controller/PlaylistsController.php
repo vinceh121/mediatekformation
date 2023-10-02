@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
@@ -14,44 +15,49 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author emds
  */
-class PlaylistsController extends AbstractController {
-    
+class PlaylistsController extends AbstractController
+{
+
+    private const PLAYLIST_TEMPLATE = "pages/playlists.html.twig";
+
     /**
      * 
      * @var PlaylistRepository
      */
     private $playlistRepository;
-    
+
     /**
      * 
      * @var FormationRepository
      */
     private $formationRepository;
-    
+
     /**
      * 
      * @var CategorieRepository
      */
-    private $categorieRepository;    
-    
-    function __construct(PlaylistRepository $playlistRepository, 
+    private $categorieRepository;
+
+    function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
-            FormationRepository $formationRespository) {
+            FormationRepository $formationRespository)
+    {
         $this->playlistRepository = $playlistRepository;
         $this->categorieRepository = $categorieRepository;
         $this->formationRepository = $formationRespository;
     }
-    
+
     /**
      * @Route("/playlists", name="playlists")
      * @return Response
      */
-    public function index(): Response{
+    public function index(): Response
+    {
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories            
+        return $this->render(self::PLAYLIST_TEMPLATE, [
+                    'playlists' => $playlists,
+                    'categories' => $categories
         ]);
     }
 
@@ -61,19 +67,19 @@ class PlaylistsController extends AbstractController {
      * @param string $ordre
      * @return Response
      */
-    public function sort(string $champ, string $ordre): Response{
-        switch($champ){
-            case "name":
-                $playlists = $this->playlistRepository->findAllOrderByName($ordre);
-                break;
+    public function sort(string $champ, string $ordre): Response
+    {
+        if ($champ === "name") {
+            $playlists = $this->playlistRepository->findAllOrderByName($ordre);
         }
+
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories            
+        return $this->render(self::PLAYLIST_TEMPLATE, [
+                    'playlists' => $playlists,
+                    'categories' => $categories
         ]);
-    }          
-	
+    }
+
     /**
      * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
      * @param string $champ
@@ -81,32 +87,33 @@ class PlaylistsController extends AbstractController {
      * @param string $table
      * @return Response
      */
-    public function findAllContain(string $champ, Request $request, string $table=""): Response{
+    public function findAllContain(string $champ, Request $request, string $table = ""): Response
+    {
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories,            
-            'valeur' => $valeur,
-            'table' => $table
+        return $this->render(self::PLAYLIST_TEMPLATE, [
+                    'playlists' => $playlists,
+                    'categories' => $categories,
+                    'valeur' => $valeur,
+                    'table' => $table
         ]);
-    }  
-    
+    }
+
     /**
      * @Route("/playlists/playlist/{id}", name="playlists.showone")
      * @param int $id
      * @return Response
      */
-    public function showOne(int $id): Response{
+    public function showOne(int $id): Response
+    {
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
-        return $this->render("pages/playlist.html.twig", [
-            'playlist' => $playlist,
-            'playlistcategories' => $playlistCategories,
-            'playlistformations' => $playlistFormations
-        ]);        
-    }       
-    
+        return $this->render(self::PLAYLIST_TEMPLATE, [
+                    'playlist' => $playlist,
+                    'playlistcategories' => $playlistCategories,
+                    'playlistformations' => $playlistFormations
+        ]);
+    }
 }

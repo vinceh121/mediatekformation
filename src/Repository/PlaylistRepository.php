@@ -14,13 +14,16 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Playlist[]    findAll()
  * @method Playlist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PlaylistRepository extends ServiceEntityRepository {
+class PlaylistRepository extends ServiceEntityRepository
+{
 
-    public function __construct(ManagerRegistry $registry) {
+    public function __construct(ManagerRegistry $registry)
+    {
         parent::__construct($registry, Playlist::class);
     }
 
-    public function add(Playlist $entity, bool $flush = false): void {
+    public function add(Playlist $entity, bool $flush = false): void
+    {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -28,7 +31,8 @@ class PlaylistRepository extends ServiceEntityRepository {
         }
     }
 
-    public function remove(Playlist $entity, bool $flush = false): void {
+    public function remove(Playlist $entity, bool $flush = false): void
+    {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -42,7 +46,8 @@ class PlaylistRepository extends ServiceEntityRepository {
      * @param string $ordre
      * @return Playlist[]
      */
-    public function findAllOrderByName(string $ordre): array {
+    public function findAllOrderByName(string $ordre): array
+    {
         return $this->createQueryBuilder('p')
                         ->leftjoin('p.formations', 'f')
                         ->groupBy('p.id')
@@ -59,7 +64,8 @@ class PlaylistRepository extends ServiceEntityRepository {
      * @param string $table si $champ dans une autre table
      * @return Playlist[]
      */
-    public function findByContainValue(string $champ, string $valeur, string $table = ""): array {
+    public function findByContainValue(string $champ, string $valeur, string $table = ""): array
+    {
         if ($valeur == "") {
             return $this->findAllOrderByName('ASC');
         }

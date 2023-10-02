@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
  */
-class Categorie {
+class Categorie
+{
 
     /**
      * @ORM\Id
@@ -29,19 +30,23 @@ class Categorie {
      */
     private $formations;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->formations = new ArrayCollection();
     }
 
-    public function getId(): ?int {
+    public function getId(): ?int
+    {
         return $this->id;
     }
 
-    public function getName(): ?string {
+    public function getName(): ?string
+    {
         return $this->name;
     }
 
-    public function setName(?string $name): self {
+    public function setName(?string $name): self
+    {
         $this->name = $name;
 
         return $this;
@@ -50,11 +55,13 @@ class Categorie {
     /**
      * @return Collection<int, Formation>
      */
-    public function getFormations(): Collection {
+    public function getFormations(): Collection
+    {
         return $this->formations;
     }
 
-    public function addFormation(Formation $formation): self {
+    public function addFormation(Formation $formation): self
+    {
         if (!$this->formations->contains($formation)) {
             $this->formations[] = $formation;
             $formation->addCategory($this);
@@ -63,7 +70,8 @@ class Categorie {
         return $this;
     }
 
-    public function removeFormation(Formation $formation): self {
+    public function removeFormation(Formation $formation): self
+    {
         if ($this->formations->removeElement($formation)) {
             $formation->removeCategory($this);
         }
