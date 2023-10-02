@@ -41,11 +41,11 @@ class PlaylistRepository extends ServiceEntityRepository
     
     /**
      * Retourne toutes les playlists triées sur le nom de la playlist
-     * @param type $champ
-     * @param type $ordre
+     * @param string $champ
+     * @param string $ordre
      * @return Playlist[]
      */
-    public function findAllOrderByName($ordre): array{
+    public function findAllOrderByName(string $ordre): array{
         return $this->createQueryBuilder('p')
                 ->leftjoin('p.formations', 'f')
                 ->groupBy('p.id')
@@ -57,12 +57,12 @@ class PlaylistRepository extends ServiceEntityRepository
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide
-     * @param type $champ
-     * @param type $valeur
-     * @param type $table si $champ dans une autre table
+     * @param string $champ
+     * @param string $valeur
+     * @param string $table si $champ dans une autre table
      * @return Playlist[]
      */
-    public function findByContainValue($champ, $valeur, $table=""): array{
+    public function findByContainValue(string $champ, string $valeur, string $table=""): array{
         if($valeur==""){
             return $this->findAllOrderByName('ASC');
         }    
@@ -88,7 +88,4 @@ class PlaylistRepository extends ServiceEntityRepository
             
         }           
     }    
-
-
-    
 }

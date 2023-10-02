@@ -41,12 +41,12 @@ class FormationRepository extends ServiceEntityRepository
 
     /**
      * Retourne toutes les formations triées sur un champ
-     * @param type $champ
-     * @param type $ordre
-     * @param type $table si $champ dans une autre table
+     * @param string $champ
+     * @param string $ordre
+     * @param string $table si $champ dans une autre table
      * @return Formation[]
      */
-    public function findAllOrderBy($champ, $ordre, $table=""): array{
+    public function findAllOrderBy(string $champ, string $ordre, $table=""): array{
         if($table==""){
             return $this->createQueryBuilder('f')
                     ->orderBy('f.'.$champ, $ordre)
@@ -64,12 +64,12 @@ class FormationRepository extends ServiceEntityRepository
     /**
      * Enregistrements dont un champ contient une valeur
      * ou tous les enregistrements si la valeur est vide
-     * @param type $champ
-     * @param type $valeur
-     * @param type $table si $champ dans une autre table
+     * @param string $champ
+     * @param string $valeur
+     * @param string $table si $champ dans une autre table
      * @return Formation[]
      */
-    public function findByContainValue($champ, $valeur, $table=""): array{
+    public function findByContainValue(string $champ, string $valeur, string $table=""): array{
         if($valeur==""){
             return $this->findAll();
         }
@@ -93,10 +93,10 @@ class FormationRepository extends ServiceEntityRepository
     
     /**
      * Retourne les n formations les plus récentes
-     * @param type $nb
+     * @param string $nb
      * @return Formation[]
      */
-    public function findAllLasted($nb) : array {
+    public function findAllLasted(string $nb) : array {
         return $this->createQueryBuilder('f')
                 ->orderBy('f.publishedAt', 'DESC')
                 ->setMaxResults($nb)     
@@ -106,10 +106,10 @@ class FormationRepository extends ServiceEntityRepository
     
     /**
      * Retourne la liste des formations d'une playlist
-     * @param type $idPlaylist
+     * @param string $idPlaylist
      * @return array
      */
-    public function findAllForOnePlaylist($idPlaylist): array{
+    public function findAllForOnePlaylist(string $idPlaylist): array{
         return $this->createQueryBuilder('f')
                 ->join('f.playlist', 'p')
                 ->where('p.id=:id')

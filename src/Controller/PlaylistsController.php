@@ -57,11 +57,11 @@ class PlaylistsController extends AbstractController {
 
     /**
      * @Route("/playlists/tri/{champ}/{ordre}", name="playlists.sort")
-     * @param type $champ
-     * @param type $ordre
+     * @param string $champ
+     * @param string $ordre
      * @return Response
      */
-    public function sort($champ, $ordre): Response{
+    public function sort(string $champ, string $ordre): Response{
         switch($champ){
             case "name":
                 $playlists = $this->playlistRepository->findAllOrderByName($ordre);
@@ -76,12 +76,12 @@ class PlaylistsController extends AbstractController {
 	
     /**
      * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
-     * @param type $champ
+     * @param string $champ
      * @param Request $request
-     * @param type $table
+     * @param string $table
      * @return Response
      */
-    public function findAllContain($champ, Request $request, $table=""): Response{
+    public function findAllContain(string $champ, Request $request, string $table=""): Response{
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
@@ -95,10 +95,10 @@ class PlaylistsController extends AbstractController {
     
     /**
      * @Route("/playlists/playlist/{id}", name="playlists.showone")
-     * @param type $id
+     * @param int $id
      * @return Response
      */
-    public function showOne($id): Response{
+    public function showOne(int $id): Response{
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
