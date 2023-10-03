@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
@@ -20,11 +19,13 @@ class FormationsController extends AbstractController
     private const FORMATIONS_TEMPLATE = "pages/formations.html.twig";
 
     /**
+     *
      * @var FormationRepository
      */
     private $formationRepository;
 
     /**
+     *
      * @var CategorieRepository
      */
     private $categorieRepository;
@@ -36,6 +37,7 @@ class FormationsController extends AbstractController
     }
 
     /**
+     *
      * @Route("/formations", name="formations")
      * @return Response
      */
@@ -44,58 +46,61 @@ class FormationsController extends AbstractController
         $formations = $this->formationRepository->findAll();
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::FORMATIONS_TEMPLATE, [
-                    'formations' => $formations,
-                    'categories' => $categories
+            'formations' => $formations,
+            'categories' => $categories
         ]);
     }
 
     /**
+     *
      * @Route("/formations/tri/{champ}/{ordre}/{table}", name="formations.sort")
-     * @param type $champ
-     * @param type $ordre
-     * @param type $table
+     * @param string $champ
+     * @param string $ordre
+     * @param string $table
      * @return Response
      */
-    public function sort($champ, $ordre, $table = ""): Response
+    public function sort(string $champ, string $ordre, string $table = ""): Response
     {
         $formations = $this->formationRepository->findAllOrderBy($champ, $ordre, $table);
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::FORMATIONS_TEMPLATE, [
-                    'formations' => $formations,
-                    'categories' => $categories
+            'formations' => $formations,
+            'categories' => $categories
         ]);
     }
 
     /**
+     *
      * @Route("/formations/recherche/{champ}/{table}", name="formations.findallcontain")
-     * @param type $champ
+     * @param string $champ
      * @param Request $request
-     * @param type $table
+     * @param string $table
      * @return Response
      */
-    public function findAllContain($champ, Request $request, $table = ""): Response
+    public function findAllContain(string $champ, Request $request, string $table = ""): Response
     {
         $valeur = $request->get("recherche");
         $formations = $this->formationRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::FORMATIONS_TEMPLATE, [
-                    'formations' => $formations,
-                    'categories' => $categories,
-                    'valeur' => $valeur,
-                    'table' => $table
+            'formations' => $formations,
+            'categories' => $categories,
+            'valeur' => $valeur,
+            'table' => $table
         ]);
     }
 
     /**
+     *
      * @Route("/formations/formation/{id}", name="formations.showone")
-     * @param type $id
+     * @param string $id
      * @return Response
      */
-    public function showOne($id): Response
+    public function showOne(string $id): Response
     {
         $formation = $this->formationRepository->find($id);
         return $this->render(self::FORMATIONS_TEMPLATE, [
-                    'formation' => $formation
+            'formation' => $formation
         ]);
     }
 }

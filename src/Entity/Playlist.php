@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\PlaylistRepository;
@@ -8,12 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ *
  * @ORM\Entity(repositoryClass=PlaylistRepository::class)
  */
 class Playlist
 {
 
     /**
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -21,19 +22,24 @@ class Playlist
     private $id;
 
     /**
+     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $name;
 
     /**
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
+     *
      * @ORM\OneToMany(targetEntity=Formation::class, mappedBy="playlist")
      */
     private $formations;
+
+    private $formationsCount = 0;
 
     public function __construct()
     {
@@ -70,6 +76,7 @@ class Playlist
     }
 
     /**
+     *
      * @return Collection<int, Formation>
      */
     public function getFormations(): Collection
@@ -79,7 +86,7 @@ class Playlist
 
     public function addFormation(Formation $formation): self
     {
-        if (!$this->formations->contains($formation)) {
+        if (! $this->formations->contains($formation)) {
             $this->formations[] = $formation;
             $formation->setPlaylist($this);
         }
@@ -98,6 +105,28 @@ class Playlist
     }
 
     /**
+     *
+     * @return int
+     */
+    public function getFormationsCount(): int
+    {
+        return $this->formationsCount;
+    }
+
+    /**
+     *
+     * @param int $formationsCount
+     * @return self
+     */
+    public function setFormationsCount(int $formationsCount): self
+    {
+        $this->formationsCount = $formationsCount;
+
+        return $this;
+    }
+
+    /**
+     *
      * @return Collection<int, string>
      */
     public function getCategoriesPlaylist(): Collection
@@ -108,7 +137,7 @@ class Playlist
             $categoriesFormation = $formation->getCategories();
 
             foreach ($categoriesFormation as $categorieFormation) {
-                if (!$categories->contains($categorieFormation->getName())) {
+                if (! $categories->contains($categorieFormation->getName())) {
                     $categories[] = $categorieFormation->getName();
                 }
             }

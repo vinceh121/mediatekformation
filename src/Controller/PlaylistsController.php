@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
@@ -21,26 +20,24 @@ class PlaylistsController extends AbstractController
     private const PLAYLIST_TEMPLATE = "pages/playlists.html.twig";
 
     /**
-     * 
+     *
      * @var PlaylistRepository
      */
     private $playlistRepository;
 
     /**
-     * 
+     *
      * @var FormationRepository
      */
     private $formationRepository;
 
     /**
-     * 
+     *
      * @var CategorieRepository
      */
     private $categorieRepository;
 
-    function __construct(PlaylistRepository $playlistRepository,
-            CategorieRepository $categorieRepository,
-            FormationRepository $formationRespository)
+    function __construct(PlaylistRepository $playlistRepository, CategorieRepository $categorieRepository, FormationRepository $formationRespository)
     {
         $this->playlistRepository = $playlistRepository;
         $this->categorieRepository = $categorieRepository;
@@ -48,20 +45,22 @@ class PlaylistsController extends AbstractController
     }
 
     /**
+     *
      * @Route("/playlists", name="playlists")
      * @return Response
      */
     public function index(): Response
     {
-        $playlists = $this->playlistRepository->findAllOrderByName('ASC');
+        $playlists = $this->playlistRepository->findAllOrder('name', 'ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PLAYLIST_TEMPLATE, [
-                    'playlists' => $playlists,
-                    'categories' => $categories
+            'playlists' => $playlists,
+            'categories' => $categories
         ]);
     }
 
     /**
+     *
      * @Route("/playlists/tri/{champ}/{ordre}", name="playlists.sort")
      * @param string $champ
      * @param string $ordre
@@ -69,18 +68,28 @@ class PlaylistsController extends AbstractController
      */
     public function sort(string $champ, string $ordre): Response
     {
-        if ($champ === "name") {
-            $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+        switch ($champ) {
+            case 'name':
+                $fullField = 'p.name';
+                break;
+            case 'formationsCount':
+                $fullField = 'formationsCount';
+                break;
+            default:
+                return new Response(null, Response::HTTP_BAD_REQUEST);
         }
+
+        $playlists = $this->playlistRepository->findAllOrder($fullField, $ordre);
 
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PLAYLIST_TEMPLATE, [
-                    'playlists' => $playlists,
-                    'categories' => $categories
+            'playlists' => $playlists,
+            'categories' => $categories
         ]);
     }
 
     /**
+     *
      * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
      * @param string $champ
      * @param Request $request
@@ -93,14 +102,15 @@ class PlaylistsController extends AbstractController
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PLAYLIST_TEMPLATE, [
-                    'playlists' => $playlists,
-                    'categories' => $categories,
-                    'valeur' => $valeur,
-                    'table' => $table
+            'playlists' => $playlists,
+            'categories' => $categories,
+            'valeur' => $valeur,
+            'table' => $table
         ]);
     }
 
     /**
+     *
      * @Route("/playlists/playlist/{id}", name="playlists.showone")
      * @param int $id
      * @return Response
@@ -111,9 +121,9 @@ class PlaylistsController extends AbstractController
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
         return $this->render(self::PLAYLIST_TEMPLATE, [
-                    'playlist' => $playlist,
-                    'playlistcategories' => $playlistCategories,
-                    'playlistformations' => $playlistFormations
+            'playlist' => $playlist,
+            'playlistcategories' => $playlistCategories,
+            'playlistformations' => $playlistFormations
         ]);
     }
 }
