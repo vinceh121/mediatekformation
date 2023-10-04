@@ -51,7 +51,7 @@ class PlaylistsController extends AbstractController
      */
     public function index(): Response
     {
-        $playlists = $this->playlistRepository->findAllOrder('name', 'ASC');
+        $playlists = $this->playlistRepository->findAllOrder('p.name', 'ASC');
         $categories = $this->categorieRepository->findAll();
         return $this->render(self::PLAYLIST_TEMPLATE, [
             'playlists' => $playlists,
