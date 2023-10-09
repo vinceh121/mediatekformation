@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+{{ form_start(form, {'attr': {'class': "card p-3 m-3 shadow-lg"}}) }}
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  {{ error }}
+</div>
+{% endif %}
+{{ form_errors(form) }}
+<div class="mb-3">
+  {{ form_row(form.email) }}
+</div>
+<div class="mb-3">
+  {{ form_row(form.password) }}
+</div>
+<div class="mb-3">
+  {{ form_widget(form.login) }}
+</div>
+{{ form_end(form) }}
+{% endblock %}
