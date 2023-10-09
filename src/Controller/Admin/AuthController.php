@@ -23,6 +23,7 @@ class AuthController extends AbstractController
         $form = $this->createForm(AdminLoginType::class);
 
         $error = $authenticationUtils->getLastAuthenticationError();
+
         if ($error != null) {
             $error = $error->getMessage();
         }
