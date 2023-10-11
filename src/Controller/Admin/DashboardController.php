@@ -16,7 +16,7 @@ class DashboardController extends AbstractController
      */
     public function dashboard(FormationRepository $formationRepo, PlaylistRepository $playlistRepo): Response
     {
-        $formations = $formationRepo->findAll();
+        $formations = $formationRepo->findAllOrderBy('publishedAt', 'ASC');
         $playlists = $playlistRepo->findAll();
 
         return $this->render('admin/dashboard.html.twig', [

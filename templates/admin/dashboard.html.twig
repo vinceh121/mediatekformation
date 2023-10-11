@@ -38,7 +38,7 @@ container-fluid
           <td>
             {{ f.title }}
           </td>
-          <td title="{{ f.publishedAt | format_datetime('full', locale='fr') }}">
+          <td data-order="{{ f.publishedAt.format('Y-m-d\TH:i:sO') }}" title="{{ f.publishedAt | format_datetime('full', locale='fr') }}">
             {{ f.publishedAt | format_datetime('relative_short', locale='fr') }}
           </td>
           <td>
