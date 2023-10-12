@@ -38,7 +38,8 @@ container-fluid
           <td>
             {{ f.title }}
           </td>
-          <td data-order="{{ f.publishedAt.format('Y-m-d\TH:i:sO') }}" title="{{ f.publishedAt | format_datetime('full', locale='fr') }}">
+          <td data-order="{{ f.publishedAt.format('Y-m-d\TH:i:sO') }}"
+            title="{{ f.publishedAt | format_datetime('full', locale='fr') }}">
             {{ f.publishedAt | format_datetime('relative_short', locale='fr') }}
           </td>
           <td>
@@ -59,7 +60,7 @@ container-fluid
               </button>
               <ul class="dropdown-menu" aria-labelledby="formActions{{ f.id }}">
                 <li>
-                  <a class="dropdown-item" href="#">Modifier</a>
+                  <a class="dropdown-item" href="{{ path('admin_formation_update', {formationId: f.id}) }}">Modifier</a>
                 </li>
                 <li>
                   <a class="dropdown-item text-white bg-danger" href="#">Supprimer</a>
