@@ -10,6 +10,7 @@ use App\Repository\CategorieRepository;
 use App\Repository\PlaylistRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  *
@@ -36,7 +37,7 @@ class AdminFormationController extends AbstractController
 
     /**
      *
-     * @Route("/{formationId}", name="update")
+     * @Route("/{formationId}", name="update", methods={"GET", "POST"})
      */
     public function update(Request $request, int $formationId): Response
     {
@@ -67,6 +68,23 @@ class AdminFormationController extends AbstractController
             'form' => $form->createView(),
             'formation' => $formation
         ]);
+    }
+
+    /**
+     *
+     * @Route("/{formationId}", name="delete", methods={"DELETE"})
+     */
+    public function delete(int $formationId): Response
+    {
+        $formation = $this->formationRepository->find($formationId);
+
+        if (!$formation) {
+            throw $this->createNotFoundException('Formation inconnue');
+        }
+
+        $this->formationRepository->remove($formation, true);
+
+        return new JsonResponse();
     }
 }
 

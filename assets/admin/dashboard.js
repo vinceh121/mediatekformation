@@ -1,4 +1,4 @@
-import '../admin';
+import { deleteFormation } from '../admin';
 import $ from 'jquery';
 import DataTable from 'datatables.net-bs5';
 import language from 'datatables.net-plugins/i18n/fr-FR';
@@ -21,5 +21,16 @@ $(document).ready(() => {
 				orderable: false
 			}
 		]
+	});
+
+	$('.delete-formation').on('click', (e) => {
+		e.preventDefault();
+
+		const { formationId, formationName } = e.target.dataset;
+
+		deleteFormation(formationId, formationName).then(_ => {
+			tblFormations.row(`tr[data-id="${formationId}"]`).remove();
+			tblFormations.draw();
+		});
 	});
 });

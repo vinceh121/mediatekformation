@@ -23,7 +23,7 @@
       </thead>
       <tbody>
         {% for f in formations %}
-        <tr>
+        <tr data-id={{ f.id }}>
           <td scope="row" class="text-muted">
             {{ f.id }}
           </td>
@@ -58,7 +58,8 @@
                   <a class="dropdown-item" href="{{ path('admin_formation_update', {formationId: f.id}) }}">Modifier</a>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white bg-danger" href="#">Supprimer</a>
+                  <a class="dropdown-item text-white bg-danger delete-formation" data-formation-id="{{ f.id }}"
+                    data-formation-name="{{ f.title }}" href="#">Supprimer</a>
                 </li>
               </ul>
             </div>
@@ -72,4 +73,6 @@
     <h3>Playlists</h3>
   </div>
 </div>
+
+{% include 'admin/components/_formation_delete_modal.html.twig' %}
 {% endblock %}

@@ -1,9 +1,12 @@
 {% extends "admin/adminbase.html.twig" %}
 
+{% block head %}
+{{ encore_entry_link_tags('admin_formation') }}
+{{ encore_entry_script_tags('admin_formation') }}
+{% endblock %}
+
 {% block breadcrumb %}
-<li class="breadcrumb-item">
-  Formations
-</li>
+<li class="breadcrumb-item">Formations</li>
 <li class="breadcrumb-item active">
   {{ formation.title }}
 </li>
@@ -18,5 +21,14 @@
   {% endfor %}
 
   {{ form(form) }}
+
+  {% if formation %}
+  <div class="mb-3">
+    <button data-formation-id="{{ formation.id }}" data-formation-name="{{ formation.title }}"
+      class="btn btn-danger delete-formation">Supprimer</button>
+  </div>
+  {% endif %}
 </div>
+
+{% include 'admin/components/_formation_delete_modal.html.twig' %}
 {% endblock %}
