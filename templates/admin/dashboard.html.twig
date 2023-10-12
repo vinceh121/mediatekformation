@@ -17,8 +17,8 @@ container-fluid
 {% block body %}
 <div class="row">
   <div class="col">
-    <h3>Formations</h3>
-    <table id="tblFormations" aria-label="Formations" class="table">
+    <h3 id="hFormations">Formations</h3>
+    <table id="tblFormations" aria-labelledby="hFormations" class="table">
       <thead>
         <tr>
           <th>#</th>
@@ -85,6 +85,7 @@ fetch('https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json')
   .then(fr => {
     const tblFormations = new DataTable('#tblFormations', {
       language: fr,
+      order: [[2, 'desc']],
       columnDefs: [
         {
           target: 3,
