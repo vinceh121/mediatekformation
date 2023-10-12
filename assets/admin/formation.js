@@ -1,7 +1,7 @@
 import { deleteFormation } from '../admin';
 import $ from 'jquery';
 
-$(document).ready(() => {
+$(() => {
 	$('.delete-formation').on('click', (e) => {
 		e.preventDefault();
 
