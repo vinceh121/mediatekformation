@@ -1,5 +1,14 @@
 {% extends "admin/adminbase.html.twig" %}
 
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+  Formations
+</li>
+<li class="breadcrumb-item active">
+  {{ formation.title }}
+</li>
+{% endblock %}
+
 {% block body %}
 <div class="card p-3 m-3 shadow-lg">
   {% for f in app.session.flashbag.get('success') %}
