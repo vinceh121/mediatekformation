@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block body %}
+{% for f in app.session.flashbag.get('success') %}
+<div class="alert alert-success">
+  {{ f }}
+</div>
+{% endfor %}
 <div class="row">
   <div class="col">
     <h3 id="hFormations">

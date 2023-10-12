@@ -59,7 +59,9 @@ class AdminFormationController extends AbstractController
             $this->em->persist($form->getData());
             $this->em->flush();
 
-            $this->addFlash('success', 'Changements enregistrés');
+            $this->addFlash('success', 'Nouvelle formation enregistrée');
+            
+            return $this->redirectToRoute('admin_dashboard');
         }
 
         return $this->render('admin/formation.html.twig', [
