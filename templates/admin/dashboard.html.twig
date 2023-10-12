@@ -25,7 +25,7 @@
           <th>#</th>
           <th>Titre</th>
           <th>Catégories</th>
-          <th>Date de publication</th>
+          <th>Publication</th>
           <th>Vidéo</th>
           <th>Playlist</th>
           <th>Actions</th>
@@ -80,7 +80,54 @@
     </table>
   </div>
   <div class="col">
-    <h3>Playlists</h3>
+    <h3 id="hPlaylists">
+      Playlists
+      <a class="btn btn-primary" href="{# path('admin_playlist_create') #}">
+        <i class="bi bi-file-earmark-plus-fill"></i>
+      </a>
+    </h3>
+    <table id="tblPlaylists" aria-labelledby="hPlaylists" class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Nombre de formations</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in playlists %}
+        <tr data-id={{ p.id }}>
+          <td scope="row" class="text-muted">
+            {{ p.id }}
+          </td>
+          <td>
+            {{ p.name }}
+          </td>
+          <td>
+            {{ p.formationsCount }}
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn" type="button" id="playActions{{ p.id }}" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fs-3 bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="playActions{{ p.id }}">
+                <li>
+                  <a class="dropdown-item" href="{# path('admin_playlist_update', {playlistId: p.id}) #}">Modifier</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-white bg-danger delete-formation" data-playlist-id="{{ p.id }}"
+                    data-playlist-name="{{ p.name }}" href="#">Supprimer</a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 

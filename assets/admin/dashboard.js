@@ -23,6 +23,17 @@ $(() => {
 		]
 	});
 
+	const tblPlaylists = new DataTable('#tblPlaylists', {
+		language: language,
+		order: [[2, 'desc']],
+		columnDefs: [
+			{
+				target: 3,
+				orderable: false
+			}
+		]
+	});
+
 	$('.delete-formation').on('click', (e) => {
 		e.preventDefault();
 
