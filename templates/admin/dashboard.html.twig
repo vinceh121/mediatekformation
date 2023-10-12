@@ -1,5 +1,10 @@
 {% extends "admin/adminbase.html.twig" %}
 
+{% block head %}
+{{ encore_entry_link_tags('admin_dashboard') }}
+{{ encore_entry_script_tags('admin_dashboard') }}
+{% endblock %}
+
 {% block body %}
 <div class="row">
   <div class="col">
@@ -63,31 +68,4 @@
     <h3>Playlists</h3>
   </div>
 </div>
-{% endblock %}
-
-{% block domJavascripts %}
-<script type="text/javascript">
-fetch('https://cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json')
-  .then(res => res.json())
-  .then(fr => {
-    const tblFormations = new DataTable('#tblFormations', {
-      language: fr,
-      order: [[2, 'desc']],
-      columnDefs: [
-        {
-          target: 3,
-          orderable: false
-        },
-        {
-          target: 4,
-          orderable: false
-        },
-        {
-          target: 5,
-          orderable: false
-        }
-      ]
-    });
-  });
-</script>
 {% endblock %}

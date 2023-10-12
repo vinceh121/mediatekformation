@@ -4,14 +4,9 @@
 container-fluid
 {% endblock %}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-{% endblock %}
-
-{% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+{% block head %}
+{{ encore_entry_link_tags('admin') }}
+{{ encore_entry_script_tags('admin') }}
 {% endblock %}
 
 {% set onAdminHome = app.request.attributes.get('_route') == 'admin_dashboard' %}
@@ -41,7 +36,8 @@ container-fluid
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
       <div class="d-flex dropdown">
-        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdownBtn" data-bs-toggle="dropdown"
+          aria-expanded="false">
           <i class="bi bi-person-circle"></i>
           {{ app.user.username }}
         </button>
