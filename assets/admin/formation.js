@@ -9,4 +9,21 @@ $(document).ready(() => {
 
 		deleteFormation(formationId, formationName).then(_ => location = '/admin');
 	});
+
+	const videoId = $('#formation_videoId');
+	videoId.on('paste', (event) => {
+		const paste = (event.originalEvent.clipboardData || window.clipboardData).getData('text');
+
+		if (URL.canParse(paste)) {
+			const url = new URL(paste);
+
+			if (['youtube.com', 'www.youtube.com'].includes(url.hostname) && url.pathname === '/watch') {
+				event.preventDefault();
+				videoId.val(url.searchParams.get('v'));
+			} else if (url.hostname === 'youtu.be') {
+				event.preventDefault();
+				videoId.val(url.pathname.substring(1));
+			}
+		}
+	});
 });
