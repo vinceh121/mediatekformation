@@ -14,6 +14,7 @@
         <tr>
           <th>#</th>
           <th>Titre</th>
+          <th>Catégories</th>
           <th>Date de publication</th>
           <th>Vidéo</th>
           <th>Playlist</th>
@@ -28,6 +29,9 @@
           </td>
           <td>
             {{ f.title }}
+          </td>
+          <td>
+            {{ f.categories | map(c => c.name) | join(', ') }}
           </td>
           <td data-order="{{ f.publishedAt.format('Y-m-d\TH:i:sO') }}"
             title="{{ f.publishedAt | format_datetime('full', locale='fr') }}">
