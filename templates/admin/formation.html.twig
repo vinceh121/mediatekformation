@@ -8,7 +8,11 @@
 {% block breadcrumb %}
 <li class="breadcrumb-item">Formations</li>
 <li class="breadcrumb-item active">
+  {% if formation is defined %}
   {{ formation.title }}
+  {% else %}
+  Nouvelle formation
+  {% endif %}
 </li>
 {% endblock %}
 
@@ -22,7 +26,7 @@
 
   {{ form(form) }}
 
-  {% if formation %}
+  {% if formation is defined%}
   <div class="mb-3">
     <button data-formation-id="{{ formation.id }}" data-formation-name="{{ formation.title }}"
       class="btn btn-danger delete-formation">Supprimer</button>
@@ -30,5 +34,7 @@
   {% endif %}
 </div>
 
+{% if formation is defined %}
 {% include 'admin/components/_formation_delete_modal.html.twig' %}
+{% endif %}
 {% endblock %}

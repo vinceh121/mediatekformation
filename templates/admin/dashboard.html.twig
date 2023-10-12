@@ -8,7 +8,12 @@
 {% block body %}
 <div class="row">
   <div class="col">
-    <h3 id="hFormations">Formations</h3>
+    <h3 id="hFormations">
+      Formations
+      <a class="btn btn-primary" href="{{ path('admin_formation_create') }}">
+        <i class="bi bi-file-earmark-plus-fill"></i>
+      </a>
+    </h3>
     <table id="tblFormations" aria-labelledby="hFormations" class="table">
       <thead>
         <tr>

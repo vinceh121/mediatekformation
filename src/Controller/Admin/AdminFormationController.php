@@ -11,6 +11,7 @@ use App\Repository\PlaylistRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Formation;
 
 /**
  *
@@ -33,6 +34,37 @@ class AdminFormationController extends AbstractController
         $this->categoryRepository = $categoryRepository;
         $this->playlistsRepository = $playlistsRepository;
         $this->em = $em;
+    }
+
+    /**
+     *
+     * @Route("/create", name="create", methods={"GET", "POST"})
+     */
+    public function create(Request $request): Response
+    {
+        $formation = new Formation();
+        $formation->setPublishedAt(new \DateTime());
+
+        $categories = $this->categoryRepository->findAll();
+        $playlists = $this->playlistsRepository->findAll();
+
+        $form = $this->createForm(FormationType::class, $formation, [
+            'categories' => $categories,
+            'playlists' => $playlists
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($form->getData());
+            $this->em->flush();
+
+            $this->addFlash('success', 'Changements enregistrés');
+        }
+
+        return $this->render('admin/formation.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
