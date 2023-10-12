@@ -18,10 +18,16 @@ class FormationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('publishedAt', DateTimeType::class)
-            ->add('title', TextType::class)
+        $builder->add('publishedAt', DateTimeType::class, [
+            'label' => 'Publié le'
+        ])
+            ->add('title', TextType::class, [
+            'label' => 'Titre'
+        ])
             ->add('description', TextareaType::class)
-            ->add('videoId', TextType::class)
+            ->add('videoId', TextType::class, [
+            'label' => 'ID Video'
+        ])
             ->add('playlist', EntityType::class, [
             'class' => Playlist::class,
             'choices' => $options['playlists'],
@@ -39,7 +45,7 @@ class FormationType extends AbstractType
             'multiple' => true
         ])
             ->add('submit', SubmitType::class, [
-            'label' => 'Connexion'
+            'label' => 'Modifier'
         ]);
     }
 
