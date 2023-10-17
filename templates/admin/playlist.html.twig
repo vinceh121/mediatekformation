@@ -29,6 +29,10 @@
   {{ form_row(form.description) }}
   <div class="mb-3">
     <label class="form-label" for="formationsSort">Formations</label>
+    <button id="formationAddBtn" class="btn btn-primary m-1" type="button">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+    {{ form_errors(form.formations) }}
     <ul id="formationsSort" class="list-group overflow-scroll"></ul>
   </div>
   {{ form_end(form) }}
@@ -40,6 +44,8 @@
   </div>
   {% endif %}
 </div>
+
+{% include 'admin/components/_formation_picker_modal.html.twig' %}
 
 {% if playlist is defined %}
 {# include 'admin/components/_playlist_delete_modal.html.twig' #}

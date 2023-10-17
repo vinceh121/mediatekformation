@@ -1,0 +1,22 @@
+<div class="modal fade" id="formationPickerModal" tabindex="-1" aria-labelledby="formationPickerModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formationPickerModalTitle">Sélectionnez une formation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Seulement les formations pas affectées à une playlist sont affichées.
+        <div class="list-group">
+          {% for formation in pickerFormations %}
+          <button type="button" class="list-group-item list-group-item-action formation-picker-btn" data-id="{{ formation.id }}" data-thumbnail="{{ formation.miniature }}">
+            <img alt="{{ formation.title }}" src="{{ formation.miniature }}">
+            {{ formation.title }}
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

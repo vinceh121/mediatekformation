@@ -38,6 +38,9 @@ class AdminPlaylistController extends AbstractController
     public function update(Request $request, int $playlistId): Response
     {
         $playlist = $this->playlistRepository->find($playlistId);
+        $pickerFormations = $this->formationRepository->findBy([
+            'playlist' => null
+        ]);
 
         if (!$playlist) {
             throw $this->createNotFoundException('Playlist inconnue');
@@ -46,7 +49,8 @@ class AdminPlaylistController extends AbstractController
         $origFormations = $playlist->getFormations()->getValues();
 
         $form = $this->createForm(PlaylistType::class, clone $playlist, [
-            'formations' => $playlist->getFormations()
+            'formations' => array_merge($playlist->getFormations()
+                ->getValues(), $pickerFormations)
         ]);
 
         $form->handleRequest($request);
@@ -63,11 +67,10 @@ class AdminPlaylistController extends AbstractController
 
             foreach ($newPlaylist->getFormations() as $fDest) {
                 if (!in_array($fDest, $origFormations)) {
-                    $fDest->setPlaylist($newPlaylist);
+                    $fDest->setPlaylist($playlist);
                 }
             }
 
-            $this->em->persist($newPlaylist);
             $this->em->flush();
 
             $this->addFlash('success', 'Changements enregistrés');
@@ -75,7 +78,8 @@ class AdminPlaylistController extends AbstractController
 
         return $this->render('admin/playlist.html.twig', [
             'form' => $form->createView(),
-            'playlist' => $playlist
+            'playlist' => isset($newPlaylist) ? $newPlaylist : $playlist, // this is to force updating the form on POSTs
+            'pickerFormations' => $pickerFormations
         ]);
     }
 }
