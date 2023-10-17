@@ -1,0 +1,82 @@
+<?php
+namespace App\Controller\Admin;
+
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Playlist;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Repository\FormationRepository;
+use App\Repository\PlaylistRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\PlaylistType;
+
+/**
+ *
+ * @Route("/admin/playlist", name="admin_playlist_")
+ */
+class AdminPlaylistController extends AbstractController
+{
+
+    private FormationRepository $formationRepository;
+
+    private PlaylistRepository $playlistRepository;
+
+    private EntityManagerInterface $em;
+
+    public function __construct(FormationRepository $formationRepository, PlaylistRepository $playlistRepository, EntityManagerInterface $em)
+    {
+        $this->formationRepository = $formationRepository;
+        $this->playlistRepository = $playlistRepository;
+        $this->em = $em;
+    }
+
+    /**
+     *
+     * @Route("/{playlistId}", name="update", methods={"GET", "POST"})
+     */
+    public function update(Request $request, int $playlistId): Response
+    {
+        $playlist = $this->playlistRepository->find($playlistId);
+
+        if (!$playlist) {
+            throw $this->createNotFoundException('Playlist inconnue');
+        }
+
+        $origFormations = $playlist->getFormations()->getValues();
+
+        $form = $this->createForm(PlaylistType::class, clone $playlist, [
+            'formations' => $playlist->getFormations()
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Playlist */
+            $newPlaylist = $form->getData();
+
+            foreach ($origFormations as $fOrig) {
+                if (!$newPlaylist->getFormations()->contains($fOrig)) {
+                    $fOrig->setPlaylist(null);
+                }
+            }
+
+            foreach ($newPlaylist->getFormations() as $fDest) {
+                if (!in_array($fDest, $origFormations)) {
+                    $fDest->setPlaylist($newPlaylist);
+                }
+            }
+
+            $this->em->persist($newPlaylist);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Changements enregistrés');
+        }
+
+        return $this->render('admin/playlist.html.twig', [
+            'form' => $form->createView(),
+            'playlist' => $playlist
+        ]);
+    }
+}
+

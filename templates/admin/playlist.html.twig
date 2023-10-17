@@ -1,0 +1,47 @@
+{% extends "admin/adminbase.html.twig" %}
+
+{% block head %}
+{{ encore_entry_link_tags('admin_playlist') }}
+{{ encore_entry_script_tags('admin_playlist') }}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">Playlists</li>
+<li class="breadcrumb-item active">
+  {% if playlist is defined %}
+  {{ playlist.name }}
+  {% else %}
+  Nouvelle playlist
+  {% endif %}
+</li>
+{% endblock %}
+
+{% block body %}
+<div class="card p-3 m-3 shadow-lg">
+  {% for f in app.session.flashbag.get('success') %}
+  <div class="alert alert-success">
+    {{ f }}
+  </div>
+  {% endfor %}
+
+  {{ form_start(form) }}
+  {{ form_row(form.name) }}
+  {{ form_row(form.description) }}
+  <div class="mb-3">
+    <label class="form-label" for="formationsSort">Formations</label>
+    <ul id="formationsSort" class="list-group overflow-scroll"></ul>
+  </div>
+  {{ form_end(form) }}
+
+  {% if playlist is defined %}
+  <div class="mb-3">
+    <button data-playlist-id="{{ playlist.id }}" data-playlist-name="{{ playlist.name }}"
+      class="btn btn-danger delete-playlist">Supprimer</button>
+  </div>
+  {% endif %}
+</div>
+
+{% if playlist is defined %}
+{# include 'admin/components/_playlist_delete_modal.html.twig' #}
+{% endif %}
+{% endblock %}

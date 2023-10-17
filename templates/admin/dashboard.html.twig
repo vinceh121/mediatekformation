@@ -115,7 +115,7 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="playActions{{ p.id }}">
                 <li>
-                  <a class="dropdown-item" href="{# path('admin_playlist_update', {playlistId: p.id}) #}">Modifier</a>
+                  <a class="dropdown-item" href="{{ path('admin_playlist_update', {playlistId: p.id}) }}">Modifier</a>
                 </li>
                 <li>
                   <a class="dropdown-item text-white bg-danger delete-formation" data-playlist-id="{{ p.id }}"

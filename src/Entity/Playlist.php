@@ -86,7 +86,7 @@ class Playlist
 
     public function addFormation(Formation $formation): self
     {
-        if (! $this->formations->contains($formation)) {
+        if (!$this->formations->contains($formation)) {
             $this->formations[] = $formation;
             $formation->setPlaylist($this);
         }
@@ -137,7 +137,7 @@ class Playlist
             $categoriesFormation = $formation->getCategories();
 
             foreach ($categoriesFormation as $categorieFormation) {
-                if (! $categories->contains($categorieFormation->getName())) {
+                if (!$categories->contains($categorieFormation->getName())) {
                     $categories[] = $categorieFormation->getName();
                 }
             }
