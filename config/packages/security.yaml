@@ -17,12 +17,7 @@ security:
             lazy: true
             user_checker: App\Utils\AdminChecker
             provider: app_user_provider
-            form_login:
-                login_path: admin_auth_login
-                check_path: admin_auth_login
-                username_parameter: 'admin_login[email]'
-                password_parameter: 'admin_login[password]'
-                default-target-path: '/admin'
+            custom_authenticator: App\Security\KeycloakAuthenticator
             logout:
                 path: admin_auth_logout
 

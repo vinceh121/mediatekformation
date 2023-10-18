@@ -1,2 +1,4 @@
 admin_auth_logout:
   path: /admin/logout
+admin_auth_callback:
+  path: /admin/callback

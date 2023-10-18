@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\AdminLoginType;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 
 /**
  *
@@ -14,24 +14,20 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class AuthController extends AbstractController
 {
 
+    private ClientRegistry $registry;
+
+    function __construct(ClientRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
+
     /**
      *
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $form = $this->createForm(AdminLoginType::class);
-
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        if ($error != null) {
-            $error = $error->getMessage();
-        }
-
-        return $this->render("admin/login.html.twig", [
-            'form' => $form->createView(),
-            'error' => $error
-        ]);
+        return $this->registry->getClient('keycloak')->redirect();
     }
 }
 
