@@ -29,7 +29,9 @@ $(() => {
 	};
 
 	for (const opt of formationsSelect) {
-		addFormation({ id: opt.value, name: $(opt).text(), thumbnail: opt.dataset.thumbnail });
+		if ($(opt).prop('selected')) {
+			addFormation({ id: opt.value, name: $(opt).text(), thumbnail: opt.dataset.thumbnail });
+		}
 	}
 
 	for (const anchor of $('.formation-open')) {
@@ -66,7 +68,7 @@ $(() => {
 			data.append('playlist[formations][]', id);
 		}
 	});
-	
+
 	$('.delete-playlist').on('click', (e) => {
 		e.preventDefault();
 

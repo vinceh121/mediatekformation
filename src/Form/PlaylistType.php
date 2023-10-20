@@ -4,15 +4,13 @@ namespace App\Form;
 use App\Entity\Formation;
 use App\Entity\Playlist;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlaylistType extends AbstractType
 {
@@ -34,9 +32,15 @@ class PlaylistType extends AbstractType
                 return $formation->getTitle();
             },
             'choice_attr' => function (Formation $formation): array {
-                return [
+                $attr = [
                     'data-thumbnail' => $formation->getMiniature()
                 ];
+                
+                if ($formation->getPlaylist()) {
+                    $attr['selected'] = true;
+                }
+                
+                return $attr;
             },
             'choice_value' => 'id',
             'multiple' => true,
