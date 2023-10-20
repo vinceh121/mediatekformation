@@ -1,4 +1,4 @@
-import { deleteFormation } from '../admin';
+import { deleteModal } from '../admin';
 import $ from 'jquery';
 
 $(() => {
@@ -7,7 +7,17 @@ $(() => {
 
 		const { formationId, formationName } = e.target.dataset;
 
-		deleteFormation(formationId, formationName).then(_ => location = '/admin');
+		deleteModal(`Supprimer la formation ${formationName}`, 'Supprimer la formation ?').then(async _ => {
+			const res = await fetch('/admin/formation/' + formationId, { method: 'DELETE' });
+
+			if (res.status !== 200) {
+				const { error } = await res.json();
+				showToast(error, `Erreur dans la suppression de la formation`, 'danger');
+				return;
+			}
+
+			location = '/admin';
+		});
 	});
 
 	const videoId = $('#formation_videoId');
