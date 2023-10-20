@@ -5,7 +5,7 @@ import language from 'datatables.net-plugins/i18n/fr-FR';
 
 $(() => {
 	const tblFormations = new DataTable('#tblFormations', {
-		language: language,
+		language,
 		order: [[3, 'desc']],
 		columnDefs: [
 			{
@@ -24,7 +24,7 @@ $(() => {
 	});
 
 	const tblPlaylists = new DataTable('#tblPlaylists', {
-		language: language,
+		language,
 		order: [[2, 'desc']],
 		columnDefs: [
 			{
@@ -32,6 +32,10 @@ $(() => {
 				orderable: false
 			}
 		]
+	});
+	
+	const tblCategories = new DataTable('#tblCategories', {
+		language
 	});
 
 	$('.delete-formation').on('click', (e) => {

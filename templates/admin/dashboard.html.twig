@@ -11,8 +11,8 @@
   {{ f }}
 </div>
 {% endfor %}
-<div class="row">
-  <div class="col">
+<div class="row m-3">
+  <div class="col m-3">
     <h3 id="hFormations">
       Formations
       <a class="btn btn-primary" href="{{ path('admin_formation_create') }}">
@@ -79,7 +79,7 @@
       </tbody>
     </table>
   </div>
-  <div class="col">
+  <div class="col m-3">
     <h3 id="hPlaylists">
       Playlists
       <a class="btn btn-primary" href="{# path('admin_playlist_create') #}">
@@ -123,6 +123,31 @@
                 </li>
               </ul>
             </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row m-3">
+  <div class="col-6 m-3">
+    <h3 id="hCategories">Catégories</h3>
+    <table aria-labelled-by="hCategories" id="tblCategories" class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in categories %}
+        <tr data-id={{ c.id }}>
+          <td scope="row" class="text-muted">
+            {{ c.id }}
+          </td>
+          <td>
+            {{ c.name }}
           </td>
         </tr>
         {% endfor %}
