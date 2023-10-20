@@ -25,6 +25,7 @@ Encore
     .addEntry('admin_dashboard', './assets/admin/dashboard.js')
     .addEntry('admin_formation', './assets/admin/formation.js')
     .addEntry('admin_playlist', './assets/admin/playlist.js')
+    .addEntry('admin_category', './assets/admin/category.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

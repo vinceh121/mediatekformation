@@ -136,12 +136,18 @@
 </div>
 <div class="row m-3">
   <div class="col-6 m-3">
-    <h3 id="hCategories">Catégories</h3>
+    <h3 id="hCategories">
+      Catégories
+      <a class="btn btn-primary" href="{{ path('admin_category_create') }}">
+        <i class="bi bi-file-earmark-plus-fill"></i>
+      </a>
+    </h3>
     <table aria-labelled-by="hCategories" id="tblCategories" class="table">
       <thead>
         <tr>
           <th>#</th>
           <th>Nom</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -152,6 +158,23 @@
           </td>
           <td>
             {{ c.name }}
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn" type="button" id="catActions{{ c.id }}" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fs-3 bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="catActions{{ c.id }}">
+                <li>
+                  <a class="dropdown-item" href="{{ path('admin_category_update', {categoryId: c.id}) }}">Modifier</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-white bg-danger delete-category" data-category-id="{{ c.id }}"
+                    data-category-name="{{ c.name }}" href="#">Supprimer</a>
+                </li>
+              </ul>
+            </div>
           </td>
         </tr>
         {% endfor %}
