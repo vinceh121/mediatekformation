@@ -1,4 +1,4 @@
-import { deleteModal } from '../admin';
+import { deleteModal, showToast } from '../admin';
 import $ from 'jquery';
 import DataTable from 'datatables.net-bs5';
 import language from 'datatables.net-plugins/i18n/fr-FR';
@@ -13,7 +13,8 @@ $(() => {
 			const res = await fetch('/admin/formation/' + formationId, { method: 'DELETE' });
 
 			if (res.status !== 200) {
-				alert(`Erreur dans la suppression de la formation: ${res.statusText}`);
+				const { error } = await res.json();
+				showToast(error, `Erreur dans la suppression de la formation`, 'danger');
 				return;
 			}
 
@@ -32,7 +33,7 @@ $(() => {
 
 			if (res.status !== 200) {
 				const { error } = await res.json();
-				alert(`Erreur dans la suppression de la playlist: ${error}`);
+				showToast(error, 'Erreur dans la suppression de la playlist', 'danger');
 				return;
 			}
 
