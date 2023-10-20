@@ -47,7 +47,6 @@
 
 {% include 'admin/components/_formation_picker_modal.html.twig' %}
 
-{% if playlist is defined %}
-{# include 'admin/components/_playlist_delete_modal.html.twig' #}
-{% endif %}
+{% include 'admin/components/_delete_modal.html.twig' %}
+{% include 'admin/components/_toast.html.twig' %}
 {% endblock %}

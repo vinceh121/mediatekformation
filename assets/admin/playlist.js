@@ -2,6 +2,7 @@ import '../admin';
 import $ from 'jquery';
 import Sortable from 'sortablejs';
 import { Modal } from 'bootstrap';
+import { deleteModal, showToast } from '../admin';
 
 $(() => {
 	const formationsSelect = $('#playlist_formations > option');
@@ -64,5 +65,23 @@ $(() => {
 		for (const id of order) {
 			data.append('playlist[formations][]', id);
 		}
+	});
+	
+	$('.delete-playlist').on('click', (e) => {
+		e.preventDefault();
+
+		const { playlistId, playlistName } = e.target.dataset;
+
+		deleteModal(`Supprimer la playlist ${playlistName}`, 'Supprimer playlist ?').then(async _ => {
+			const res = await fetch('/admin/playlist/' + playlistId, { method: 'DELETE' });
+
+			if (res.status !== 200) {
+				const { error } = await res.json();
+				showToast(error, 'Erreur dans la suppression de la playlist', 'danger');
+				return;
+			}
+
+			location = '/admin';
+		});
 	});
 });
