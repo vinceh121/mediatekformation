@@ -39,8 +39,6 @@ class Playlist
      */
     private $formations;
 
-    private $formationsCount = 0;
-
     public function __construct()
     {
         $this->formations = new ArrayCollection();
@@ -100,27 +98,6 @@ class Playlist
         if ($this->formations->removeElement($formation) && $formation->getPlaylist() === $this) {
             $formation->setPlaylist(null);
         }
-
-        return $this;
-    }
-
-    /**
-     *
-     * @return int
-     */
-    public function getFormationsCount(): int
-    {
-        return $this->formationsCount;
-    }
-
-    /**
-     *
-     * @param int $formationsCount
-     * @return self
-     */
-    public function setFormationsCount(int $formationsCount): self
-    {
-        $this->formationsCount = $formationsCount;
 
         return $this;
     }
