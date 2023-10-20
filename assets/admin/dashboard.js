@@ -1,4 +1,4 @@
-import { deleteFormation } from '../admin';
+import { deleteModal } from '../admin';
 import $ from 'jquery';
 import DataTable from 'datatables.net-bs5';
 import language from 'datatables.net-plugins/i18n/fr-FR';
@@ -33,7 +33,7 @@ $(() => {
 			}
 		]
 	});
-	
+
 	const tblCategories = new DataTable('#tblCategories', {
 		language
 	});
@@ -43,7 +43,13 @@ $(() => {
 
 		const { formationId, formationName } = e.target.dataset;
 
-		deleteFormation(formationId, formationName).then(_ => {
+		deleteModal(`Supprimer la formation ${formationName} ?`, 'Supprimer formation ?').then(async _ => {
+			const res = await fetch('/admin/formation/' + formationId, { method: 'DELETE' });
+
+			if (res.status !== 200) {
+				alert(`Erreur dans la suppression de la formation: ${res.statusText}`);
+			}
+
 			tblFormations.row(`tr[data-id="${formationId}"]`).remove();
 			tblFormations.draw();
 		});

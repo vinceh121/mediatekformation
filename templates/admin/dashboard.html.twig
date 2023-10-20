@@ -118,7 +118,7 @@
                   <a class="dropdown-item" href="{{ path('admin_playlist_update', {playlistId: p.id}) }}">Modifier</a>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white bg-danger delete-formation" data-playlist-id="{{ p.id }}"
+                  <a class="dropdown-item text-white bg-danger delete-playlist" data-playlist-id="{{ p.id }}"
                     data-playlist-name="{{ p.name }}" href="#">Supprimer</a>
                 </li>
               </ul>
@@ -156,5 +156,5 @@
   </div>
 </div>
 
-{% include 'admin/components/_formation_delete_modal.html.twig' %}
+{% include 'admin/components/_delete_modal.html.twig' %}
 {% endblock %}
