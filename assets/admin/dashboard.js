@@ -4,6 +4,43 @@ import DataTable from 'datatables.net-bs5';
 import language from 'datatables.net-plugins/i18n/fr-FR';
 
 $(() => {
+	$('.delete-formation').on('click', (e) => {
+		e.preventDefault();
+
+		const { formationId, formationName } = e.target.dataset;
+
+		deleteModal(`Supprimer la formation ${formationName} ?`, 'Supprimer formation ?').then(async _ => {
+			const res = await fetch('/admin/formation/' + formationId, { method: 'DELETE' });
+
+			if (res.status !== 200) {
+				alert(`Erreur dans la suppression de la formation: ${res.statusText}`);
+				return;
+			}
+
+			tblFormations.row(`tr[data-id="${formationId}"]`).remove();
+			tblFormations.draw();
+		});
+	});
+
+	$('.delete-playlist').on('click', (e) => {
+		e.preventDefault();
+
+		const { playlistId, playlistName } = e.target.dataset;
+
+		deleteModal(`Supprimer la playlist ${playlistName} ?`, 'Supprimer playlist ?').then(async _ => {
+			const res = await fetch('/admin/playlist/' + playlistId, { method: 'DELETE' });
+
+			if (res.status !== 200) {
+				const { error } = await res.json();
+				alert(`Erreur dans la suppression de la playlist: ${error}`);
+				return;
+			}
+
+			tblPlaylists.row(`tr[data-id="${playlistId}"]`).remove();
+			tblPlaylists.draw();
+		});
+	});
+
 	const tblFormations = new DataTable('#tblFormations', {
 		language,
 		order: [[3, 'desc']],
@@ -36,22 +73,5 @@ $(() => {
 
 	const tblCategories = new DataTable('#tblCategories', {
 		language
-	});
-
-	$('.delete-formation').on('click', (e) => {
-		e.preventDefault();
-
-		const { formationId, formationName } = e.target.dataset;
-
-		deleteModal(`Supprimer la formation ${formationName} ?`, 'Supprimer formation ?').then(async _ => {
-			const res = await fetch('/admin/formation/' + formationId, { method: 'DELETE' });
-
-			if (res.status !== 200) {
-				alert(`Erreur dans la suppression de la formation: ${res.statusText}`);
-			}
-
-			tblFormations.row(`tr[data-id="${formationId}"]`).remove();
-			tblFormations.draw();
-		});
 	});
 });

@@ -10,6 +10,7 @@ use App\Repository\FormationRepository;
 use App\Repository\PlaylistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\PlaylistType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  *
@@ -81,6 +82,29 @@ class AdminPlaylistController extends AbstractController
             'playlist' => isset($newPlaylist) ? $newPlaylist : $playlist, // this is to force updating the form on POSTs
             'pickerFormations' => $pickerFormations
         ]);
+    }
+
+    /**
+     *
+     * @Route("/{playlistId}", name="delete", methods={"DELETE"})
+     */
+    public function delete(int $playlistId): Response
+    {
+        $playlist = $this->playlistRepository->find($playlistId);
+
+        if (!$playlist) {
+            throw $this->createNotFoundException('Playlist inconnue');
+        }
+
+        if ($playlist->getFormations()->count() !== 0) {
+            return new JsonResponse([
+                'error' => 'La playlist doit être vide pour être supprimée'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->playlistRepository->remove($playlist, true);
+
+        return new JsonResponse();
     }
 }
 

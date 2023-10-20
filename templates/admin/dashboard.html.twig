@@ -53,9 +53,13 @@
             </a>
           </td>
           <td>
+            {% if f.playlist %}
             <a class="fs-2" href="{{ path('admin_playlist_update', {playlistId: f.playlist.id}) }}">
               <i class="bi bi-card-list"></i>
             </a>
+            {% else %}
+            <i title="Pas de playlist" class="fs-2 text-warning bi bi-slash-square"></i>
+            {% endif %}
           </td>
           <td>
             <div class="dropdown">
@@ -157,4 +161,5 @@
 </div>
 
 {% include 'admin/components/_delete_modal.html.twig' %}
+{% include 'admin/components/_toast.html.twig' %}
 {% endblock %}
