@@ -17,7 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlaylistsController extends AbstractController
 {
 
-    private const PLAYLIST_TEMPLATE = "pages/playlists.html.twig";
+    private const PLAYLISTS_TEMPLATE = "pages/playlists.html.twig";
+    private const SINGLE_PLAYLIST_TEMPLATE = "pages/playlist.html.twig";
 
     /**
      *
@@ -53,7 +54,7 @@ class PlaylistsController extends AbstractController
     {
         $playlists = $this->playlistRepository->findAllOrder('p.name', 'ASC');
         $categories = $this->categorieRepository->findAll();
-        return $this->render(self::PLAYLIST_TEMPLATE, [
+        return $this->render(self::PLAYLISTS_TEMPLATE, [
             'playlists' => $playlists,
             'categories' => $categories
         ]);
@@ -82,7 +83,7 @@ class PlaylistsController extends AbstractController
         $playlists = $this->playlistRepository->findAllOrder($fullField, $ordre);
 
         $categories = $this->categorieRepository->findAll();
-        return $this->render(self::PLAYLIST_TEMPLATE, [
+        return $this->render(self::PLAYLISTS_TEMPLATE, [
             'playlists' => $playlists,
             'categories' => $categories
         ]);
@@ -101,7 +102,7 @@ class PlaylistsController extends AbstractController
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render(self::PLAYLIST_TEMPLATE, [
+        return $this->render(self::PLAYLISTS_TEMPLATE, [
             'playlists' => $playlists,
             'categories' => $categories,
             'valeur' => $valeur,
@@ -120,7 +121,7 @@ class PlaylistsController extends AbstractController
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
-        return $this->render(self::PLAYLIST_TEMPLATE, [
+        return $this->render(self::SINGLE_PLAYLIST_TEMPLATE, [
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
             'playlistformations' => $playlistFormations

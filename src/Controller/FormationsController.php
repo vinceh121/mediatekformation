@@ -17,6 +17,7 @@ class FormationsController extends AbstractController
 {
 
     private const FORMATIONS_TEMPLATE = "pages/formations.html.twig";
+    private const SINGLE_FORMATION_TEMPLATE = "pages/formation.html.twig";
 
     /**
      *
@@ -99,7 +100,7 @@ class FormationsController extends AbstractController
     public function showOne(string $id): Response
     {
         $formation = $this->formationRepository->find($id);
-        return $this->render(self::FORMATIONS_TEMPLATE, [
+        return $this->render(self::SINGLE_FORMATION_TEMPLATE, [
             'formation' => $formation
         ]);
     }
