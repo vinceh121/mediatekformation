@@ -8,7 +8,6 @@ use App\Repository\CategorieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\Formation;
 use App\Form\CategoryType;
 use App\Entity\Categorie;
 
