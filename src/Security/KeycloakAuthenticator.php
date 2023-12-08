@@ -79,7 +79,7 @@ class KeycloakAuthenticator extends OAuth2Authenticator implements Authenticatio
         throw new AccessDeniedException(previous: $exception);
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
         return new RedirectResponse($this->router->generate('admin_auth_login'), Response::HTTP_TEMPORARY_REDIRECT);
     }
