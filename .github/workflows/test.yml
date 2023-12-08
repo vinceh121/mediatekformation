@@ -40,5 +40,7 @@ jobs:
 
     - name: Run database migrations
       run: ./bin/console d:m:m
+    - name: Load data fixtures
+      run: ./bin/console d:f:l
     - name: Run test suite
       run: ./bin/phpunit
