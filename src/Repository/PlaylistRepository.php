@@ -59,7 +59,6 @@ class PlaylistRepository extends ServiceEntityRepository
             ->getResult();
 
         foreach ($rawres as $r) {
-            $r[0]->setFormationsCount($r['formationsCount']);
             $res[] = $r[0];
         }
 
