@@ -31,6 +31,7 @@ jobs:
       uses: shogo82148/actions-setup-mysql@v1
       with:
         mysql-version: "mariadb-10.11"
+    - run: mysql -uroot -e 'CREATE DATABASE _test;'
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
