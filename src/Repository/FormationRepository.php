@@ -100,7 +100,7 @@ class FormationRepository extends ServiceEntityRepository
      * @param string $nb
      * @return Formation[]
      */
-    public function findAllLasted(string $nb): array
+    public function findAllLasted(int $nb): array
     {
         return $this->createQueryBuilder('f')
                         ->orderBy('f.publishedAt', 'DESC')
