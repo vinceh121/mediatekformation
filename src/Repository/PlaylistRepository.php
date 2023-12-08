@@ -49,14 +49,19 @@ class PlaylistRepository extends ServiceEntityRepository
      */
     public function findAllOrder(string $field, string $order): array
     {
-        $res = $this->_em->createQueryBuilder()
-            ->select('p')
+        $rawres = $this->_em->createQueryBuilder()
+            ->select('p', 'COUNT(f.id) AS formationsCount')
             ->from(Playlist::class, 'p')
             ->leftjoin('p.formations', 'f')
             ->groupBy('p.id')
             ->orderBy($field, $order)
             ->getQuery()
             ->getResult();
+
+        foreach ($rawres as $r) {
+            $r[0]->setFormationsCount($r['formationsCount']);
+            $res[] = $r[0];
+        }
 
         return $res;
     }
