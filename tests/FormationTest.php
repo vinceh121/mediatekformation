@@ -31,4 +31,23 @@ class FormationTest extends KernelTestCase
         $this->assertEquals('title 3', $res[0]->getTitle());
         $this->assertEquals('title 2', $res[1]->getTitle());
     }
+
+    public function testRepoPlaylist(): void
+    {
+        /** @var $repo \App\Repository\PlaylistRepository */
+        $playRepo = self::getContainer()->get('App\Repository\PlaylistRepository');
+
+        /** @var $repo \App\Repository\FormationRepository */
+        $formRepo = self::getContainer()->get('App\Repository\FormationRepository');
+
+        $playlist = $playRepo->findBy([
+            'name' => 'My playlist'
+        ])[0];
+
+        $forms = $formRepo->findAllForOnePlaylist($playlist->getId());
+
+        $this->assertEquals('title 1', $forms[0]->getTitle());
+        $this->assertEquals('title 2', $forms[1]->getTitle());
+        $this->assertEquals('title 3', $forms[2]->getTitle());
+    }
 }
