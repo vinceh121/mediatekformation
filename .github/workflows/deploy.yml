@@ -8,7 +8,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    environment: 
+      name: prod
+      url: https://mediatekformation.vinceh121.me
     steps:
     - name: multiple command
       uses: appleboy/ssh-action@v1.0.2
