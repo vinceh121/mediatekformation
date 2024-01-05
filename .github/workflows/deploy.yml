@@ -1,0 +1,23 @@
+name: Deploy service
+
+on:
+  push:
+    branches: [ deploy ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: multiple command
+      uses: appleboy/ssh-action@v1.0.2
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script_stop: true
+        script: |
+          cd /var/www/html/cned/mediatekformation
+          git pull
+          composer i
