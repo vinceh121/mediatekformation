@@ -39,3 +39,26 @@ it("should sort formations by title", async () => {
 	const firstFormation = await driver.findElement(By.css("tbody tr h5"));
 	expect(await firstFormation.getText()).toBe("title 3");
 });
+
+it("should sort formations by date", async () => {
+	await driver.get(BASE_URL + "/formations");
+	await (await driver.findElement(By.css('a[href="/formations/tri/publishedAt/DESC"]'))).click();
+	expect(await driver.getCurrentUrl()).toContain("/formations/tri/publishedAt/DESC");
+
+	const firstFormation = await driver.findElement(By.css("tbody tr h5"));
+	expect(await firstFormation.getText()).toBe("title 3");
+});
+
+it("should search formations by title", async () => {
+	await driver.get(BASE_URL + "/formations");
+	const searchBar = await driver.findElement(By.css('form[action="/formations/recherche/title"] input'));
+	searchBar.sendKeys("title 2");
+
+	const searchButton = await driver.findElement(By.css('form[action="/formations/recherche/title"] button'));
+	await searchButton.click();
+	
+	expect(await driver.getCurrentUrl()).toContain("/formations/recherche/title");
+
+	const firstFormation = await driver.findElement(By.css("tbody tr h5"));
+	expect(await firstFormation.getText()).toBe("title 2");
+});
