@@ -24,3 +24,7 @@ jobs:
           git pull
           composer i
           bin/console doctrine:m:m
+
+          rm -rf www/docs
+          doxygen
+
