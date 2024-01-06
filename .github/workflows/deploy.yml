@@ -23,3 +23,6 @@ jobs:
           cd /var/www/html/cned/mediatekformation
           git pull
           composer i
+
+          rm -rf www/docs
+          doxygen

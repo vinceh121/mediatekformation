@@ -1,0 +1,7 @@
+/** \mainpage Mediatek Formation
+Ce site, développé avec Symfony 5.4, permet d'accéder aux
+vidéos d'auto-formation proposées par une chaîne demédiathèques
+et qui sont aussi accessibles sur YouTube.
+
+Il dispose d'un front office ainsi que d'un back office.
+*/
