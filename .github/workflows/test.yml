@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  unit-tests:
     runs-on: ubuntu-latest
     env:
       APP_ENV: test
@@ -44,3 +44,62 @@ jobs:
       run: yes | ./bin/console d:f:l
     - name: Run test suite
       run: ./bin/phpunit
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    strategy:
+      matrix:
+        browser: ['firefox', 'chrome']
+
+    env:
+      APP_ENV: test
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install webdrivers
+      run: sudo apt update && sudo apt install firefoxdriver chromium-chromedriver
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Setup MariaDB
+      uses: shogo82148/actions-setup-mysql@v1
+      with:
+        mysql-version: "mariadb-10.11"
+    - run: mysql -uroot -e 'CREATE DATABASE mediatekformation_test;'
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run database migrations
+      run: ./bin/console d:m:m
+    - name: Load data fixtures
+      run: yes | ./bin/console d:f:l
+
+    - name: Run PHP server
+      run: php -S 0.0.0.0:8080 &
+      working-directory: ./public
+
+    - name: Install E2E dependencies
+      run: npm i
+      working-directory: ./selenium-tests
+
+    - name: Run E2E tests
+      run: npm test
+      env:
+        BROWSER: ${{ matrix.browser }}
+        BASE_URL: http://127.0.0.1:8080
+      working-directory: ./selenium-tests
+    
+
+    
