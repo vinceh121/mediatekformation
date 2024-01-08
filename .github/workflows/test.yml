@@ -50,7 +50,7 @@ jobs:
     needs: unit-tests
     strategy:
       matrix:
-        browser: ['firefox', 'chrome']
+        browser: ['firefox', 'chrome', 'edge']
 
     env:
       APP_ENV: test
