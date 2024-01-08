@@ -57,6 +57,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install E2E dependencies
+      run: npm i
+      working-directory: ./selenium-tests
+
     - name: Install webdrivers
       run: ./node_modules/selenium-webdriver/bin/linux/selenium-manager --browser ${{ matrix.browser }}
       working-directory: ./selenium-tests
@@ -90,10 +94,6 @@ jobs:
     - name: Run PHP server
       run: php -S 0.0.0.0:8080 &
       working-directory: ./public
-
-    - name: Install E2E dependencies
-      run: npm i
-      working-directory: ./selenium-tests
 
     - name: Run E2E tests
       run: npm test
