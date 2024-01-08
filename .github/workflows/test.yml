@@ -93,6 +93,8 @@ jobs:
 
     - name: Run PHP server
       run: php -S 0.0.0.0:8080 &
+      env:
+        DATABASE_URL: mysql://root@127.0.0.1:3306/mediatekformation_test
       working-directory: ./public
 
     - name: Run E2E tests
