@@ -34,6 +34,41 @@ class AdminPlaylistController extends AbstractController
 
     /**
      *
+     * @Route("/create", name="create", methods={"GET", "POST"})
+     */
+    public function create(Request $request): Response
+    {
+        $playlist = new Playlist();
+
+        $pickerFormations = $this->formationRepository->findBy([
+            'playlist' => null
+        ]);
+
+        $form = $this->createForm(PlaylistType::class, $playlist, [
+            'formations' => array_merge($playlist->getFormations()
+                ->getValues(), $pickerFormations)
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($form->getData());
+            $this->em->flush();
+
+            $this->addFlash('success', 'Nouvelle formation enregistrée');
+
+            return $this->redirectToRoute('admin_dashboard');
+        }
+
+        return $this->render('admin/playlist.html.twig', [
+            'form' => $form->createView(),
+            'playlist' => $playlist,
+            'pickerFormations' => $pickerFormations
+        ]);
+    }
+
+    /**
+     *
      * @Route("/{playlistId}", name="update", methods={"GET", "POST"})
      */
     public function update(Request $request, int $playlistId): Response
