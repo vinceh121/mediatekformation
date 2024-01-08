@@ -56,9 +56,30 @@ it("should search formations by title", async () => {
 
 	const searchButton = await driver.findElement(By.css('form[action="/formations/recherche/title"] button'));
 	await searchButton.click();
-	
+
 	expect(await driver.getCurrentUrl()).toContain("/formations/recherche/title");
 
 	const firstFormation = await driver.findElement(By.css("tbody tr h5"));
 	expect(await firstFormation.getText()).toBe("title 2");
+});
+
+it("should navigate to playlists by navbar", async () => {
+	await driver.get(BASE_URL + "/");
+	const anchor = await driver.findElement(By.css('.nav-link[href="/playlists"]'));
+	await anchor.click();
+
+	expect(await driver.getCurrentUrl()).toContain("/playlists");
+	expect(await driver.getTitle()).toBe(""); // TODO set a title
+});
+
+it("should navigate to specific playlist", async () => {
+	await driver.get(BASE_URL + "/playlists");
+	const anchor = await driver.findElement(By.css('.btn[href^="/playlists/playlist/"]'));
+	await anchor.click();
+
+	expect(await driver.getCurrentUrl()).toContain("/playlists/playlist/");
+	expect(await driver.getTitle()).toBe(""); // TODO set a title
+
+	const playlistTitle = await driver.findElement(By.css('h4, .text-info'));
+	expect(await playlistTitle.getText()).toBe("My playlist");
 });
