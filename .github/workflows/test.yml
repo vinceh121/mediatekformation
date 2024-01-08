@@ -91,6 +91,9 @@ jobs:
     - name: Load data fixtures
       run: yes | ./bin/console d:f:l
 
+    - name: Build web
+      run: npm i && npm run build
+
     - name: Run PHP server
       run: php -d variables_order=EGPCS -S 0.0.0.0:8080 &
       working-directory: ./public
