@@ -20,7 +20,7 @@ beforeAll(async () => {
 
 it("should navigate to home", async () => {
 	await driver.get(BASE_URL + "/");
-	expect(await driver.getTitle()).toBe(""); // TODO set a title
+	expect(await driver.getTitle()).toBe("Mediatek Formation");
 });
 
 it("should navigate to formations using navbar", async () => {
@@ -28,7 +28,7 @@ it("should navigate to formations using navbar", async () => {
 	const anchor = await driver.findElement(By.css('.nav-link[href="/formations"]'));
 	await anchor.click();
 	expect(await driver.getCurrentUrl()).toContain("/formations");
-	expect(await driver.getTitle()).toBe(""); // TODO set a title
+	expect(await driver.getTitle()).toBe("Formations");
 });
 
 it("should sort formations by title", async () => {
@@ -69,7 +69,7 @@ it("should navigate to playlists by navbar", async () => {
 	await anchor.click();
 
 	expect(await driver.getCurrentUrl()).toContain("/playlists");
-	expect(await driver.getTitle()).toBe(""); // TODO set a title
+	expect(await driver.getTitle()).toBe("Playlists");
 });
 
 it("should navigate to specific playlist", async () => {
@@ -78,7 +78,7 @@ it("should navigate to specific playlist", async () => {
 	await anchor.click();
 
 	expect(await driver.getCurrentUrl()).toContain("/playlists/playlist/");
-	expect(await driver.getTitle()).toBe(""); // TODO set a title
+	expect(await driver.getTitle()).toBe("Playlist My playlist");
 
 	const playlistTitle = await driver.findElement(By.css('h4, .text-info'));
 	expect(await playlistTitle.getText()).toBe("My playlist");
