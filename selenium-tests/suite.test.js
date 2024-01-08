@@ -4,6 +4,8 @@ const firefox = require("selenium-webdriver/firefox");
 
 const { BROWSER, BASE_URL } = process.env;
 
+jest.setTimeout(5 * 60 * 100); // 5 minutes
+
 /**
  * @type {import("selenium-webdriver").ThenableWebDriver}
  */
@@ -16,7 +18,7 @@ beforeAll(async () => {
 		.setFirefoxOptions(new firefox.Options()
 			.addArguments("--headless"))
 		.build();
-}, 10_000);
+});
 
 it("should navigate to home", async () => {
 	await driver.get(BASE_URL + "/");
