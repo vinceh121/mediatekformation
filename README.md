@@ -1,8 +1,15 @@
 # Mediatekformation
+
+Forké de https://github.com/CNED-SLAM/mediatekformation
+
 ## Présentation
+
 Ce site, développé avec Symfony 5.4, permet d'accéder aux vidéos d'auto-formation proposées par une chaîne de médiathèques et qui sont aussi accessibles sur YouTube.<br> 
-Actuellement, seule la partie front office a été développée. Elle contient les fonctionnalités globales suivantes :<br>
+La partie front office permet les fonctionnalités suivantes :<br>
 ![img1](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/eed72688-c9e5-4509-ab44-7309d3e86041)
+
+Le back office permet de créer, modifier, ou supprimer des formations, catégories, ou playlists.
+
 ## Les différentes pages
 Voici les 5 pages correspondant aux différents cas d’utilisation.
 ### Page 1 : l'accueil
